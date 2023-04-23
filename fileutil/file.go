@@ -46,6 +46,7 @@ func GraduallyCreateDir(dir string) error {
 	return nil
 }
 
+// CreateNotExistDir 创建不存在的路径，只支持相对路径创建
 func CreateNotExistDir(fileDir string) error {
 	_, err := os.Stat(fileDir)
 	if err != nil && os.IsNotExist(err) {
@@ -58,8 +59,8 @@ func CreateNotExistDir(fileDir string) error {
 	return err
 }
 
-// FileAppend 向文件追加一行
-func FileAppend(fileDir, fileName, content string) error {
+// FileAppendString 向文件追加一行 str
+func FileAppendString(fileDir, fileName, content string) error {
 	//如果指定路径不存在则开始创建
 	err := CreateNotExistDir(fileDir)
 	if err != nil {
