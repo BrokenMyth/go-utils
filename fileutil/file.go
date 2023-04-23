@@ -8,27 +8,12 @@ import (
 
 // GenerateFileFromString 通过字符串生成文件
 func GenerateFileFromString(fileDir, fileName, content string) error {
-	if fileName == "" {
-		return fmt.Errorf("fileName cannot be empty")
-	}
-	if fileDir == "" {
-		return fmt.Errorf("fileDir cannot be empty")
-	}
-	b := []byte(content)
-	filePath := fileDir + "/" + fileName
-	_, err := os.Stat(fileDir)
+	//如果指定路径不存在则开始创建
+	err := CreateNotExistDir(fileDir)
 	if err != nil {
-		if os.IsNotExist(err) {
-			//尝试逐级创建
-			e := GraduallyCreateDir(fileDir)
-			if e != nil {
-				return err
-			}
-		} else {
-			return err
-		}
+		return err
 	}
-	err = os.WriteFile(filePath, b, os.ModePerm)
+	err = os.WriteFile(fileDir+"/"+fileName, []byte(content), os.ModePerm)
 	if err != nil {
 		fmt.Println("Can't create txt.", err)
 		return err
@@ -57,6 +42,36 @@ func GraduallyCreateDir(dir string) error {
 				}
 			}
 		}
+	}
+	return nil
+}
+
+func CreateNotExistDir(fileDir string) error {
+	_, err := os.Stat(fileDir)
+	if err != nil && os.IsNotExist(err) {
+		//尝试逐级创建
+		e := GraduallyCreateDir(fileDir)
+		if e != nil {
+			return err
+		}
+	}
+	return err
+}
+
+// FileAppend 向文件追加一行
+func FileAppend(fileDir, fileName, content string) error {
+	//如果指定路径不存在则开始创建
+	err := CreateNotExistDir(fileDir)
+	if err != nil {
+		return err
+	}
+	file, err := os.OpenFile(fileDir+"/"+fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	_, err = file.Write([]byte(content + "\n"))
+	if err != nil {
+		return err
 	}
 	return nil
 }
