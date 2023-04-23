@@ -54,6 +54,8 @@ func CreateNotExistDir(fileDir string) error {
 		e := GraduallyCreateDir(fileDir)
 		if e != nil {
 			return err
+		} else {
+			return nil
 		}
 	}
 	return err
