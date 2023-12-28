@@ -2,7 +2,7 @@
 
 config_file="/etc/ssh/sshd_config"
 
-key="xxxxxxx"
+key="$1"
 rm ~/.ssh/authorized_keys
 echo "$key" >> ~/.ssh/authorized_keys
 
