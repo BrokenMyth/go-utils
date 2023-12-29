@@ -6,10 +6,13 @@ import (
 	"strings"
 )
 
-// GenerateFileFromString 通过字符串生成文件
-func GenerateFileFromString(fileDir, fileName, content string) error {
+// FileGenerateFromString 通过字符串生成文件
+func FileGenerateFromString(fileDir, fileName, content string) error {
+	if fileDir == "" {
+		fileDir = "."
+	}
 	//如果指定路径不存在则开始创建
-	err := CreateNotExistDir(fileDir)
+	err := createNotExistDir(fileDir)
 	if err != nil {
 		return err
 	}
@@ -21,8 +24,8 @@ func GenerateFileFromString(fileDir, fileName, content string) error {
 	return nil
 }
 
-// GraduallyCreateDir 相对路径逐级创建目录
-func GraduallyCreateDir(dir string) error {
+// graduallyCreateDir 相对路径逐级创建目录
+func graduallyCreateDir(dir string) error {
 	dirs := strings.Split(dir, "/")
 	if len(dirs) == 0 || len(dirs) < 2 {
 		return fmt.Errorf("dir cannot be empty or cannot be split")
@@ -46,12 +49,12 @@ func GraduallyCreateDir(dir string) error {
 	return nil
 }
 
-// CreateNotExistDir 创建不存在的路径，只支持相对路径创建
-func CreateNotExistDir(fileDir string) error {
+// createNotExistDir 创建不存在的路径，只支持相对路径创建
+func createNotExistDir(fileDir string) error {
 	_, err := os.Stat(fileDir)
 	if err != nil && os.IsNotExist(err) {
 		//尝试逐级创建
-		e := GraduallyCreateDir(fileDir)
+		e := graduallyCreateDir(fileDir)
 		if e != nil {
 			return err
 		} else {
@@ -64,7 +67,7 @@ func CreateNotExistDir(fileDir string) error {
 // FileAppendString 向文件追加一行 str
 func FileAppendString(fileDir, fileName, content string) error {
 	//如果指定路径不存在则开始创建
-	err := CreateNotExistDir(fileDir)
+	err := createNotExistDir(fileDir)
 	if err != nil {
 		return err
 	}
