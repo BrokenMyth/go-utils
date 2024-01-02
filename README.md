@@ -18,7 +18,7 @@ go get github.com/BrokenMyth/go-utils
 
 # Linux 相关脚本
 
-
+最佳适配 Ubuntu，其他系统不一定兼容
 
 **安装 docker**
 
@@ -36,14 +36,28 @@ https://raw.githubusercontent.com/BrokenMyth/go-utils/main/shell/docker/uninstal
 
 **开启 rsa**
 
-Key 填本地生成的秘钥。（TODO：如果配置里不存在一些 rsa 字段，需要新写入）
+Key 填本地生成的秘钥，且一定要加上引号。（TODO：如果配置里不存在一些 rsa 字段，需要新写入）
 
 ```
 curl -sSL https://raw.githubusercontent.com/BrokenMyth/go-utils/main/shell/system/open_rsa.sh | bash -s "key"
+```
 
 随后使用本地机连接
+```
 ssh -i ~/.ssh/id_rsa root@ip  
 ssh root@ip
+```
+
+查看 key：
+
+```
+cat ~/.ssh/id_rsa.pub
+```
+
+如果没有则生成：
+
+```
+ssh-keygen -t rsa
 ```
 
 
