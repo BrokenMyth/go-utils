@@ -98,8 +98,15 @@ curl -sSL https://raw.githubusercontent.com/BrokenMyth/go-utils/main/shell/xray/
 
 ```
 curl -sSL https://raw.githubusercontent.com/BrokenMyth/go-utils/main/shell/ffmpeg/install_amd64_ffmpeg.sh | bash
+```
+
+```
 curl -sSL https://raw.githubusercontent.com/BrokenMyth/go-utils/main/shell/ffmpeg/install_arm64_ffmpeg.sh | bash
 ```
+
+
+
+
 
 (TODO: 根据系统架构来安装)
 
