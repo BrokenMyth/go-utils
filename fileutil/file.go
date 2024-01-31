@@ -24,8 +24,8 @@ func FileGenerateFromString(fileDir, fileName, content string) error {
 	return nil
 }
 
-// graduallyCreateDir 相对路径逐级创建目录
-func graduallyCreateDir(dir string) error {
+// GraduallyCreateDir 相对路径逐级创建目录
+func GraduallyCreateDir(dir string) error {
 	dirs := strings.Split(dir, "/")
 	if len(dirs) == 0 || len(dirs) < 2 {
 		return fmt.Errorf("dir cannot be empty or cannot be split")
@@ -54,7 +54,7 @@ func createNotExistDir(fileDir string) error {
 	_, err := os.Stat(fileDir)
 	if err != nil && os.IsNotExist(err) {
 		//尝试逐级创建
-		e := graduallyCreateDir(fileDir)
+		e := GraduallyCreateDir(fileDir)
 		if e != nil {
 			return err
 		} else {
